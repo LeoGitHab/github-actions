@@ -15,7 +15,7 @@ def create_app():
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.init_app(app)
 
-    from main.models import Client, Parking, ClientParking, ParkingLog
+    from models import Client, Parking, ClientParking, ParkingLog
 
     @app.before_first_request
     def before_request_func():
