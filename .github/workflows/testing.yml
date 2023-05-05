@@ -1,0 +1,25 @@
+name: Test Parking Base
+on:
+  pull_request:
+    branches:
+      - master
+      - dev
+    types: [opened, reopened, edited]
+  push:
+    branches:
+      - master
+      - dev
+jobs:
+  test:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Get repository code
+        uses: actions/checkout@v3
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Run app
+        run: python main/app.py
+      - name: Tast application
+        run: pytest tests/test_flask.py
+
+

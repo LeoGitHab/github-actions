@@ -176,3 +176,7 @@ def create_app():
         return jsonify(clients_list), 200
 
     return app
+
+
+app = create_app()
+app.run()
