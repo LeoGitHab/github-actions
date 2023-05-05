@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 from sqlalchemy import Column, Integer, String, DateTime, Boolean, ForeignKey, UniqueConstraint
 from sqlalchemy.orm import relationship
 
-from .app import db
+from app import db
 from typing import Dict, Any
 
 
