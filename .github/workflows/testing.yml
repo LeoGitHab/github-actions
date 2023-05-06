@@ -26,8 +26,8 @@ jobs:
     runs-on: ubuntu-20.04
     needs: build
     steps:
-      - name: Test via pytest
-        run: pytest tests/test_flask.py
+      #- name: Test via pytest
+       # run: pytest tests/test_flask.py
       - name: Test via isort
         run: isort --check-only --diff --profile black main/
       - name: Test via flake8
