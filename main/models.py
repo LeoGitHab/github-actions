@@ -21,7 +21,7 @@ class Parking(db.Model):
     address = Column(String(100), nullable=False)
     opened = Column(Boolean, default=True)
     count_places = Column(Integer, nullable=False)
-    count_available_places = Column(Integer, nullable=True)
+    available_places = Column(Integer, nullable=True)
 
     def __repr__(self):
         return f"Parking id={self.id} at {self.address} opened={self.opened}"

@@ -93,7 +93,7 @@ def create_app():
         new_parking_place = Parking(
             address=address,
             count_places=count_places,
-            count_available_places=count_places,
+            available_places=count_places,
         )
 
         db.session.add(new_parking_place)
@@ -128,8 +128,8 @@ def create_app():
             .one_or_none()
         )
 
-        count_available_places = (
-            db.session.query(Parking.count_available_places)
+        available_places = (
+            db.session.query(Parking.available_places)
             .where(Parking.id == parking_id)
             .one()[0]
         )
@@ -137,12 +137,12 @@ def create_app():
         if (
             parking_place_open is None
             or parking_place_open[0] is False
-            or (count_available_places - 1) < 0
+            or (available_places - 1) < 0
         ):
             return f"Parking with id={parking_id} is not available.", 404
 
         db.session.query(Parking).filter(Parking.id == parking_id).update(
-            {Parking.count_available_places: (count_available_places - 1)}
+            {Parking.available_places: (available_places - 1)}
         )
 
         time_in = datetime.utcnow()
@@ -170,34 +170,34 @@ def create_app():
 
     @app.route("/client_parking", methods=["DELETE"])
     def delete_client_from_parking():
-        client_id = request.form.get("client_id", type=int)
-        parking_id = request.form.get("parking_id", type=int)
+        cl_id = request.form.get("client_id", type=int)
+        park_id = request.form.get("parking_id", type=int)
 
         record_exists = bool(
             ClientParking.query.filter(
                 and_(
-                    ClientParking.client_id == client_id,
-                    ClientParking.parking_id == parking_id,
+                    ClientParking.client_id == cl_id,
+                    ClientParking.parking_id == park_id,
                 )
             ).first()
         )
 
         if not record_exists:
-            return f"Combo client_id, and parking_id is not exist.", 404
+            return "Combo client_id, and parking_id is not exist.", 404
 
         db.session.query(ParkingLog).filter(
-            and_(ParkingLog.client_id == client_id, ParkingLog.parking_id == parking_id)
+            and_(ParkingLog.client_id == cl_id, ParkingLog.parking_id == park_id)
         ).update({ParkingLog.time_out: datetime.utcnow()})
 
         db.session.query(ClientParking).filter(
             and_(
-                ClientParking.client_id == client_id,
-                ClientParking.parking_id == parking_id,
+                ClientParking.client_id == cl_id,
+                ClientParking.parking_id == park_id,
             )
         ).delete()
 
-        db.session.query(Parking).filter(Parking.id == parking_id).update(
-            {Parking.count_available_places: (Parking.count_available_places + 1)}
+        db.session.query(Parking).filter(Parking.id == park_id).update(
+            {Parking.available_places: (Parking.available_places + 1)}
         )
 
         db.session.commit()
