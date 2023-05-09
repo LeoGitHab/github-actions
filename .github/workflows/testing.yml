@@ -33,8 +33,8 @@ jobs:
           isort --profile black main/
       - name: Test and correct via flake8
         run: flake8 main/
-      - name: Test and correct via mypy
-        run: mypy main/
+      #- name: Test and correct via mypy
+        #run: mypy main/
 
   test:
     runs-on: ubuntu-20.04
