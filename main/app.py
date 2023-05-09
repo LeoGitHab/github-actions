@@ -36,11 +36,11 @@ def create_app():
         """Создание нового клиента"""
         name = request.form.get("name", type=str)
         surname = request.form.get("surname", type=str)
-        credit_card = request.form.get("credit_card", type=str)
-        car_number = request.form.get("car_number", type=str)
+        card = request.form.get("credit_card", type=str)
+        car_num = request.form.get("car_number", type=str)
 
         new_user = Client(
-            name=name, surname=surname, credit_card=credit_card, car_number=car_number
+            name=name, surname=surname, credit_card=card, car_number=car_num
         )
 
         db.session.add(new_user)
@@ -183,10 +183,7 @@ def create_app():
         )
 
         if not record_exists:
-            return (
-                f"Combination client_id, and parking_id is not exist.",
-                404,
-            )
+            return f"Combo client_id, and parking_id is not exist.", 404
 
         db.session.query(ParkingLog).filter(
             and_(ParkingLog.client_id == client_id, ParkingLog.parking_id == parking_id)
