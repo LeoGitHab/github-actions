@@ -24,7 +24,7 @@ class Parking(db.Model):
     count_available_places = Column(Integer, nullable=True)
 
     def __repr__(self):
-        return f"Parking place with id={self.id} at {self.address} opened={self.opened}"
+        return f"Parking id={self.id} at {self.address} opened={self.opened}"
 
     def to_json(self) -> Dict[str, Any]:
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
@@ -49,7 +49,8 @@ class Client(db.Model):
 class ClientParking(db.Model):
     __tablename__ = "client_parking"
     __table_args__ = (
-        UniqueConstraint("client_id", "parking_id", name="unique_client_parking"),
+        UniqueConstraint("client_id", "parking_id",
+                         name="unique_client_parking"),
     )
 
     id = Column(Integer, primary_key=True)
@@ -58,8 +59,10 @@ class ClientParking(db.Model):
     time_in = Column(DateTime, default=datetime.utcnow)
     time_out = Column(DateTime, default=datetime.utcnow)
 
-    parking = relationship("Parking", cascade="all,delete", backref="client_parking")
-    client = relationship("Client", cascade="all,delete", backref="client_parking")
+    parking = relationship("Parking", cascade="all,delete",
+                           backref="client_parking")
+    client = relationship("Client", cascade="all,delete",
+                          backref="client_parking")
 
     def __repr__(self):
         return (
@@ -80,8 +83,10 @@ class ParkingLog(db.Model):
     time_in = Column(DateTime, default=datetime.utcnow)
     time_out = Column(DateTime, default=datetime.utcnow)
 
-    parking_log_ = relationship("Parking", cascade="all,delete", backref="parking_log")
-    client_log_ = relationship("Client", cascade="all,delete", backref="parking_log")
+    parking_log_ = relationship("Parking", cascade="all,delete",
+                                backref="parking_log")
+    client_log_ = relationship("Client", cascade="all,delete",
+                               backref="parking_log")
 
     def __repr__(self):
         return (

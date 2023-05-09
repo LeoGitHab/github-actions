@@ -40,7 +40,8 @@ def create_app():
         car_number = request.form.get("car_number", type=str)
 
         new_user = Client(
-            name=name, surname=surname, credit_card=credit_card, car_number=car_number
+            name=name, surname=surname,
+            credit_card=credit_card, car_number=car_number
         )
 
         db.session.add(new_user)
@@ -120,7 +121,7 @@ def create_app():
         )
 
         if credit_card_check is None or credit_card_check[0] == "":
-            return f"Client with id={client_id} does not have any credit card.", 400
+            return f"Client with id={client_id} does not have any card.", 400
 
         parking_place_open = (
             db.session.query(Parking.opened)
@@ -184,7 +185,7 @@ def create_app():
 
         if not record_exists:
             return (
-                f"Combination client_id={client_id}, and parking_id={parking_id} is not exist.",
+                f"Combination client_id, and parking_id is not exist.",
                 404,
             )
 
@@ -200,7 +201,8 @@ def create_app():
         ).delete()
 
         db.session.query(Parking).filter(Parking.id == parking_id).update(
-            {Parking.count_available_places: (Parking.count_available_places + 1)}
+            {Parking.count_available_places:
+                 (Parking.count_available_places + 1)}
         )
 
         db.session.commit()
