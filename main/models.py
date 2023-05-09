@@ -49,8 +49,7 @@ class Client(db.Model):
 class ClientParking(db.Model):
     __tablename__ = "client_parking"
     __table_args__ = (
-        UniqueConstraint("client_id", "parking_id",
-                         name="unique_client_parking"),
+        UniqueConstraint("client_id", "parking_id", name="unique_client_parking"),
     )
 
     id = Column(Integer, primary_key=True)
@@ -59,10 +58,8 @@ class ClientParking(db.Model):
     time_in = Column(DateTime, default=datetime.utcnow)
     time_out = Column(DateTime, default=datetime.utcnow)
 
-    parking = relationship("Parking", cascade="all,delete",
-                           backref="client_parking")
-    client = relationship("Client", cascade="all,delete",
-                          backref="client_parking")
+    parking = relationship("Parking", cascade="all,delete", backref="client_parking")
+    client = relationship("Client", cascade="all,delete", backref="client_parking")
 
     def __repr__(self):
         return (
@@ -83,10 +80,8 @@ class ParkingLog(db.Model):
     time_in = Column(DateTime, default=datetime.utcnow)
     time_out = Column(DateTime, default=datetime.utcnow)
 
-    parking_log_ = relationship("Parking", cascade="all,delete",
-                                backref="parking_log")
-    client_log_ = relationship("Client", cascade="all,delete",
-                               backref="parking_log")
+    park_log = relationship("Parking", cascade="all,delete", backref="parking_log")
+    cl_log = relationship("Client", cascade="all,delete", backref="parking_log")
 
     def __repr__(self):
         return (

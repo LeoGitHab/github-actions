@@ -40,8 +40,7 @@ def create_app():
         car_number = request.form.get("car_number", type=str)
 
         new_user = Client(
-            name=name, surname=surname,
-            credit_card=credit_card, car_number=car_number
+            name=name, surname=surname, credit_card=credit_card, car_number=car_number
         )
 
         db.session.add(new_user)
@@ -201,8 +200,7 @@ def create_app():
         ).delete()
 
         db.session.query(Parking).filter(Parking.id == parking_id).update(
-            {Parking.count_available_places:
-                 (Parking.count_available_places + 1)}
+            {Parking.count_available_places: (Parking.count_available_places + 1)}
         )
 
         db.session.commit()
