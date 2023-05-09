@@ -1,7 +1,7 @@
 import json
 import pytest
 
-from github-actions.main.models import Client, Parking, ClientParking, ParkingLog
+from main.models import Client, Parking, ClientParking, ParkingLog
 from sqlalchemy import func
 
 
