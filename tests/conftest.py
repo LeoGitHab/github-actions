@@ -2,7 +2,7 @@ import pytest
 
 from datetime import datetime, timedelta
 from main.app import create_app, db as _db
-from main.models import Client, Parking, ClientParking, ParkingLog
+from github-actions.main.models import Client, Parking, ClientParking, ParkingLog
 
 
 @pytest.fixture()
