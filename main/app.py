@@ -186,7 +186,10 @@ def create_app():
             return "Combo client_id, and parking_id is not exist.", 404
 
         db.session.query(ParkingLog).filter(
-            and_(ParkingLog.client_id == cl_id, ParkingLog.parking_id == park_id)
+            and_(
+                ParkingLog.client_id == cl_id,
+                ParkingLog.parking_id == park_id,
+            )
         ).update({ParkingLog.time_out: datetime.utcnow()})
 
         db.session.query(ClientParking).filter(
