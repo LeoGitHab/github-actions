@@ -1,8 +1,8 @@
 import pytest
 
 from datetime import datetime, timedelta
-from github-actions.main.app import create_app, db as _db
-from github-actions.main.models import Client, Parking, ClientParking, ParkingLog
+from main.app import create_app, db as _db
+from main.models import Client, Parking, ClientParking, ParkingLog
 
 
 @pytest.fixture()
