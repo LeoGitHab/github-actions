@@ -23,15 +23,11 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements_for_lint.txt
-      - name: Test and correct via black
-        run: |
-          black --check --diff main/
-          black main/
-      - name: Test and correct via isort
-        run: |
-          isort --check-only --diff --profile black main/
-          isort --profile black main/
-      - name: Test and correct via flake8
+      - name: Test via black
+        run: black --check --diff main/
+      - name: Test via isort
+        run: isort --check-only --diff main/
+      - name: Test via flake8
         run: flake8 main/
       #- name: Test and correct via mypy
         #run: mypy main/
