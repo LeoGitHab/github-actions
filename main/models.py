@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import Any, Dict
 
-from app import db
+from .app import db
 from sqlalchemy import (
     Boolean,
     Column,
